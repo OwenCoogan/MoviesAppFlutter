@@ -1,34 +1,63 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:m2/screens/movie/index.dart';
-import 'package:m2/screens/moviesList/index.dart';
-import 'package:m2/screens/home.dart';
+import 'package:http/http.dart' as http;
+
+import 'models/movie.dart';
+import 'widgets/moviesWidget.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(App());
 }
 
-final Map<String, Widget Function(BuildContext)> routes = {
-  '/home': (context) => const MyHomePage(title: 'Flutter'),
-  '/movie': (context) => const MovieScren(),
-  '/movieslist/': (context) => const MoviesListScren(),
-  '/other': (context) => Scaffold(
-        appBar: AppBar(),
-      ),
-};
+class App extends StatefulWidget {
+  @override
+  _App createState() => _App();
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class _App extends State<App> {
+   List<Movie> movies = <Movie>[];
+  @override
+  void initState() {
+    super.initState();
+    _populateAllMovies();
+  }
+
+  void _populateAllMovies() async {
+    var _movies = await _fetchAllMovies();
+    setState(() {
+      movies = _movies;
+    });
+  }
+
+
+  Future<List<Movie>> _fetchAllMovies() async {
+      final response = await http
+        .get(Uri.parse('https://api.tvmaze.com/shows?page=1'));
+
+      if(response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      Iterable list = result;
+      return list.map((movie) => Movie.fromJson(movie)).toList();
+    } else {
+      throw Exception("Failed to load movies!");
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: 'Flutter',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      debugShowCheckedModeBanner: false,
-      routes: routes,
-      initialRoute: '/home',
+      title: "Movies App",
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Movies")
+        ),
+        body: MoviesWidget(movies: movies)
+      )
     );
+
   }
 }
