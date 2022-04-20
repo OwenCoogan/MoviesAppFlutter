@@ -24,7 +24,7 @@ class MoviesWidget extends StatelessWidget {
             SizedBox(
               width: 100,
               child: ClipRRect(
-                // child: Image.network(movie.poster),
+                child: Image.network(movie.image),
                 borderRadius: BorderRadius.circular(10),
               )
 
