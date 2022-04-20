@@ -35,8 +35,8 @@ class MoviesWidget extends StatelessWidget {
                   child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Text(movie.title),
-                  Text(movie.year)
+                  Text(movie.name),
+                  Text(movie.premiered)
               ],),
                 ),
             )

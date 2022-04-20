@@ -17,7 +17,7 @@ class App extends StatefulWidget {
 }
 
 class _App extends State<App> {
-  List<Movie> movies = [];
+   List<Movie> movies = <Movie>[];
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,6 @@ class _App extends State<App> {
         .get(Uri.parse('https://api.tvmaze.com/shows?page=1'));
 
       if(response.statusCode == 200) {
-      log(response.body);
       final result = jsonDecode(response.body);
       Iterable list = result;
       return list.map((movie) => Movie.fromJson(movie)).toList();

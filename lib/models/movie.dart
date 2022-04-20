@@ -1,14 +1,14 @@
 
 class Movie {
-  final  title;
-  final  year;
+  final name;
+  final premiered;
 
-  Movie({required this.title,required this.year});
+  Movie({this.name, this.premiered});
 
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
-      title: json["Title"],
-      year: json["Year"]
+      name: json['name'],
+      premiered: json['premiered']
     );
   }
 
