@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import 'models/movie.dart';
 import 'widgets/moviesWidget.dart';
+import 'widgets/movieWidget.dart';
 
 void main() {
   runApp(App());
@@ -55,8 +56,12 @@ class _App extends State<App> {
         appBar: AppBar(
           title: Text("Movies")
         ),
-        body: MoviesWidget(movies: movies)
-      )
+      ),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) =>  MoviesWidget(movies: movies),
+        '/movie/1': (context) => const IndividualMovieScreen(),
+      }
     );
 
   }
