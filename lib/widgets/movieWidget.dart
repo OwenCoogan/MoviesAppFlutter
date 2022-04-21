@@ -7,13 +7,13 @@ import '../models/movie.dart';
 class IndividualMovieScreen extends StatelessWidget {
 
 
-  const IndividualMovieScreen({Key? key}) : super(key: key);
-
+  const IndividualMovieScreen({Key? key, required this.movie}) : super(key: key);
+  final Movie movie;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Individual movie'),
+        title: Text(movie.name),
         actions: [
           GestureDetector(
             onTap: () {

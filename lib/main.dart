@@ -60,7 +60,6 @@ class _App extends State<App> {
       initialRoute: '/home',
       routes: {
         '/home': (context) =>  MoviesWidget(movies: movies),
-        '/movie/1': (context) => const IndividualMovieScreen(),
       }
     );
 

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:m2/widgets/movieWidget.dart';
 
 import '../models/movie.dart';
 
@@ -34,7 +35,12 @@ class MoviesWidget extends StatelessWidget {
             subtitle: Text(movies[index].premiered),
             leading: Image.network(movies[index].image),
             onTap: () {
-              Navigator.pushNamed(context, '/movie/1');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => IndividualMovieScreen(movie: movies[index]),
+                ),
+              );
             },
           );
         },
