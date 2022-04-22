@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,10 +18,16 @@ class App extends StatefulWidget {
 }
 
 class _App extends State<App> {
+  late ScrollController controller;
    List<Movie> movies = <Movie>[];
+
+  int page = 1;
+
+
   @override
   void initState() {
     super.initState();
+    controller = ScrollController()..addListener(_scrollListener);
     _populateAllMovies();
   }
 
@@ -31,11 +37,25 @@ class _App extends State<App> {
       movies = _movies;
     });
   }
-
+  void incrementPage() {
+    setState(() {
+      page++;
+      _fetchAllMovies();
+    });
+  }
+  void _scrollListener() {
+    print(controller.position.extentAfter);
+    if (controller.position.extentAfter < 500) {
+      EasyLoading.show(status: 'loading...');
+      setState(() {
+        incrementPage();
+      });
+    }
+  }
 
   Future<List<Movie>> _fetchAllMovies() async {
       final response = await http
-        .get(Uri.parse('https://api.tvmaze.com/shows?page=1'));
+        .get(Uri.parse('https://api.tvmaze.com/shows?page=$page'));
 
       if(response.statusCode == 200) {
       final result = jsonDecode(response.body);
@@ -46,6 +66,8 @@ class _App extends State<App> {
     }
 
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +82,8 @@ class _App extends State<App> {
       initialRoute: '/home',
       routes: {
         '/home': (context) =>  MoviesWidget(movies: movies),
-      }
+      },
+      builder: EasyLoading.init(),
     );
 
   }

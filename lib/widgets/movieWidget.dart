@@ -32,7 +32,6 @@ class IndividualMovieScreen extends StatelessWidget {
           children: [
             Image.network(movie.image),
             Text(movie.name),
-            Text(movie.premiered),
             Text(movie.language),
             Text(movie.summary),
           ],
