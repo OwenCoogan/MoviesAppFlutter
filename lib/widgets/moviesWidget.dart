@@ -32,7 +32,7 @@ class MoviesWidget extends StatelessWidget {
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(movies[index].name),
-            subtitle: Text(movies[index].premiered),
+            subtitle: movies[index].premiered !=null ?Text(movies[index].premiered): Text('No Premiere Date'),
             leading: Image.network(movies[index].image),
             onTap: () {
               Navigator.push(
