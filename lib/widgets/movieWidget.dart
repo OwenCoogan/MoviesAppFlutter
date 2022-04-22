@@ -21,10 +21,20 @@ class IndividualMovieScreen extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Icon(Icons.edit),
+               child: Text(movie.premiered),
             ),
           ),
         ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.network(movie.image),
+            Text(movie.name),
+            Text(movie.premiered),
+          ],
+        ),
       ),
     );
   }
