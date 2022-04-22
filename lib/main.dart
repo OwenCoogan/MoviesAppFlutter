@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -46,6 +46,7 @@ class _App extends State<App> {
   void _scrollListener() {
     print(controller.position.extentAfter);
     if (controller.position.extentAfter < 500) {
+      EasyLoading.show(status: 'loading...');
       setState(() {
         incrementPage();
       });
@@ -81,7 +82,8 @@ class _App extends State<App> {
       initialRoute: '/home',
       routes: {
         '/home': (context) =>  MoviesWidget(movies: movies),
-      }
+      },
+      builder: EasyLoading.init(),
     );
 
   }
